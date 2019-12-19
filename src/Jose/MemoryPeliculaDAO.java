@@ -76,11 +76,12 @@ public class MemoryPeliculaDAO {
 		// Intentar evitar varias veces las mísmas peliculas.
 		Scanner scanner = new Scanner(System.in);
 		List<PeliculaTO> list = new ArrayList<PeliculaTO>();
-		System.out.println("Has cargado alguna vez la lista de Peliculas: ");
-		String si = scanner.nextLine();
+//		System.out.println("Has cargado alguna vez la lista de Peliculas: ");
+//		String si = scanner.nextLine();
 
-		if ("no".equalsIgnoreCase(si)) {
+//		if ("no".equalsIgnoreCase(si)) {
 			if (cargar == false) {
+				
 				System.out.println("El catalogo en primer instante se encuentra vacio ... ");
 				System.out.println("Cargando Peliculas almacenadas en la Base de Datos de Everis: ");
 				System.out.println("***************************************************************");
@@ -102,11 +103,12 @@ public class MemoryPeliculaDAO {
 					}
 
 				}
-
+				// Inicializo la variable cargar a true para que una vez que tenga la lista cargada no me la vuelva a duplicar.
+				cargar = true;
 			} else {
 				System.out.println("La lista ya esta cargada.");
 			}
-		}
+//		}
 		return list;
 
 	}
@@ -123,10 +125,11 @@ public class MemoryPeliculaDAO {
 		System.out.println("****************************************************");
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
+		
 		System.out.println("");
 		System.out.println("***************");
-
 		System.out.println("Vamos añadir una nueva pelicula.");
+		System.out.println("***************");
 
 		System.out.print("Ingresa el Titulo: ");
 		String titulo = scanner.nextLine();
@@ -188,6 +191,7 @@ public class MemoryPeliculaDAO {
 
 	}
 
+	
 	public static void EliminarPeliculas() {
 
 	}
