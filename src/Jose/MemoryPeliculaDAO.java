@@ -17,6 +17,7 @@ public class MemoryPeliculaDAO {
 	private static int opcion;
 	static ArrayList<PeliculaTO> lista = new ArrayList<PeliculaTO>();
 	static Boolean cargar = false;
+	private static Scanner scanner;
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
@@ -58,7 +59,7 @@ public class MemoryPeliculaDAO {
 				ListarPeliculasIdentificador();
 				break;
 			case 5:
-				System.out.println("Has deseado Borrar peliculas mediante su identificador");
+				EliminarPeliculas();
 				break;
 			case 6:
 				System.out.println("Has pulsado en salir, hata pronto");
@@ -76,10 +77,7 @@ public class MemoryPeliculaDAO {
 		// Intentar evitar varias veces las mísmas peliculas.
 		Scanner scanner = new Scanner(System.in);
 		List<PeliculaTO> list = new ArrayList<PeliculaTO>();
-//		System.out.println("Has cargado alguna vez la lista de Peliculas: ");
-//		String si = scanner.nextLine();
 
-//		if ("no".equalsIgnoreCase(si)) {
 			if (cargar == false) {
 				
 				System.out.println("El catalogo en primer instante se encuentra vacio ... ");
@@ -108,7 +106,6 @@ public class MemoryPeliculaDAO {
 			} else {
 				System.out.println("La lista ya esta cargada.");
 			}
-//		}
 		return list;
 
 	}
@@ -170,32 +167,51 @@ public class MemoryPeliculaDAO {
 		}
 	}
 
-	public static void ListarPeliculasIdentificador() {
+	public static List<PeliculaTO> ListarPeliculasIdentificador() throws InterruptedException {
 
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(" Vamos a listar peliculas mediante su Titulo: ");
 		System.out.println("");
 		System.out.println("Introduce su identificador");
 		String identificador = scanner.nextLine();
-
-//	for(PeliculaTO peli: lista) {
-////		PeliculaTO pel = new PeliculaTO();
-//		if(identificador == pel.getTitulo()) {
-//			System.out.println("");
-//			System.out.println("");
-//			System.out.println("Mostrando la pelicula deseada");
-//			System.out.println("*******************************");
-//			System.out.println(pel);
-//		}
-//	}
+		
+		for(PeliculaTO peli : lista) {
+			
+			if (identificador.equalsIgnoreCase(peli.getCodigopelicula())) {
+				System.out.println("");
+				System.out.println("Mostrando la pelicula deseada");
+				System.out.println("*****************************");
+				System.out.println(peli);
+				break;
+			}else {
+				System.out.println("Este título no se encuentra en nuestra Base de datos");
+				break;
+			}
+		}
+	
+		return lista;
 
 	}
 
 	
-	public static void EliminarPeliculas() {
-
+	public static List<PeliculaTO> EliminarPeliculas() throws InterruptedException {
+		scanner = new Scanner(System.in);
+		System.out.println("Introduce el Identificador de la pelicual que desea usted eliminar de la lista: ");
+		String borrar= scanner.nextLine();
+		
+		for(PeliculaTO peli : lista) {
+			if(borrar.equalsIgnoreCase(peli.getCodigopelicula())) {
+				System.out.println("");
+				System.out.println("La pelicula que desea usted borrar es la siguiente: ");
+				System.out.println("");
+				System.out.println(peli);
+				break;
+			}
+		}
+		return lista;
 	}
 
+	
 	public String getCadena() {
 		return cadena;
 	}
