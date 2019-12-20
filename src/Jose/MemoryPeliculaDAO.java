@@ -1,10 +1,13 @@
 package Jose;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.swing.JOptionPane;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import sun.security.util.Length;
 
@@ -12,8 +15,10 @@ public class MemoryPeliculaDAO {
 
 	private String cadena;
 	private String entrada;
+	@SuppressWarnings("unused")
 	private static Scanner menu;
 	private static boolean salir;
+	@SuppressWarnings("unused")
 	private static int opcion;
 	static ArrayList<PeliculaTO> lista = new ArrayList<PeliculaTO>();
 	static Boolean cargar = false;
@@ -21,6 +26,7 @@ public class MemoryPeliculaDAO {
 
 	public static void main(String[] args) throws InterruptedException {
 		// TODO Auto-generated method stub
+		@SuppressWarnings("resource")
 		Scanner entrada = new Scanner(System.in);
 
 		System.out.println("**********************************************************");
@@ -75,39 +81,39 @@ public class MemoryPeliculaDAO {
 
 	public static List<PeliculaTO> CargarCatalogo() throws InterruptedException {
 		// Intentar evitar varias veces las mísmas peliculas.
+		@SuppressWarnings({ "resource", "unused" })
 		Scanner scanner = new Scanner(System.in);
 		List<PeliculaTO> list = new ArrayList<PeliculaTO>();
 
-			if (cargar == false) {
-				
-				System.out.println("El catalogo en primer instante se encuentra vacio ... ");
-				System.out.println("Cargando Peliculas almacenadas en la Base de Datos de Everis: ");
-				System.out.println("***************************************************************");
+		if (cargar == false) {
 
-				lista.add(new PeliculaTO("Cazador de Demonios 0", "145asd", "jhon", "pepe"));
-				lista.add(new PeliculaTO("Cazador de Demonios 1", "245asd", "javi", "papa"));
-				lista.add(new PeliculaTO("Cazador de Demonios 2", "345asd", "poek", "porqa"));
-				lista.add(new PeliculaTO("Cazador de Demonios 3", "445asd", "claroq", "aqrrf"));
-				lista.add(new PeliculaTO("Cazador de Demonios 4", "745asd", "arpqo", "adsf"));
-				System.out.println("");
-				System.out.println("");
+			System.out.println("El catalogo en primer instante se encuentra vacio ... ");
+			System.out.println("Cargando Peliculas almacenadas en la Base de Datos de Everis: ");
+			System.out.println("***************************************************************");
 
-				for (PeliculaTO a : lista) {
-					if (!lista.isEmpty()) {
-						// Cada 2 segundo carga una pelicula que tenga almacenada en la base de datos.
-						// Thread.sleep(2000);
-						System.out.println(a);
-						list.add(a);
-					}
+			lista.add(new PeliculaTO("Cazador de Demonios 0", "145asd", "jhon", "pepe"));
+			lista.add(new PeliculaTO("Cazador de Demonios 1", "245asd", "javi", "papa"));
+			lista.add(new PeliculaTO("Cazador de Demonios 2", "345asd", "poek", "porqa"));
+			lista.add(new PeliculaTO("Cazador de Demonios 3", "445asd", "claroq", "aqrrf"));
+			lista.add(new PeliculaTO("Cazador de Demonios 4", "745asd", "arpqo", "adsf"));
+			System.out.println("");
+			System.out.println("");
 
+			for (PeliculaTO a : lista) {
+				if (!lista.isEmpty()) {
+					// Cada 2 segundo carga una pelicula que tenga almacenada en la base de datos.
+					// Thread.sleep(2000);
+					System.out.println(a);
+					list.add(a);
 				}
-				// Inicializo la variable cargar a true para que una vez que tenga la lista cargada no me la vuelva a duplicar.
-				cargar = true;
-			} else {
-				System.out.println("La lista ya esta cargada.");
 			}
+			// Inicializo la variable cargar a true para que una vez que tenga la lista
+			// cargada no me la vuelva a duplicar.
+			cargar = true;
+		} else {
+			System.out.println("La lista ya esta cargada.");
+		}
 		return list;
-
 	}
 
 	public static void AgregarPeliculas() {
@@ -122,7 +128,7 @@ public class MemoryPeliculaDAO {
 		System.out.println("****************************************************");
 		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
-		
+
 		System.out.println("");
 		System.out.println("***************");
 		System.out.println("Vamos añadir una nueva pelicula.");
@@ -167,51 +173,85 @@ public class MemoryPeliculaDAO {
 		}
 	}
 
-	public static List<PeliculaTO> ListarPeliculasIdentificador() throws InterruptedException {
-
+	public static void ListarPeliculasIdentificador() {
+		@SuppressWarnings("resource")
 		Scanner scanner = new Scanner(System.in);
+		boolean verdad = false;
+		ArrayList<PeliculaTO> contenido = new ArrayList<PeliculaTO>();
+
 		System.out.println(" Vamos a listar peliculas mediante su Titulo: ");
 		System.out.println("");
 		System.out.println("Introduce su identificador");
 		String identificador = scanner.nextLine();
-		
-		for(PeliculaTO peli : lista) {
-			
+
+		for (PeliculaTO peli : lista) {
 			if (identificador.equalsIgnoreCase(peli.getCodigopelicula())) {
-				System.out.println("");
-				System.out.println("Mostrando la pelicula deseada");
-				System.out.println("*****************************");
-				System.out.println(peli);
-				break;
-			}else {
-				System.out.println("Este título no se encuentra en nuestra Base de datos");
-				break;
+				verdad = true;
+				contenido.add(peli);
 			}
 		}
-	
-		return lista;
-
+		if (verdad == true) {
+			System.out.println("*****************************");
+			System.out.println("Mostrando la pelicula deseada");
+			System.out.println("*****************************");
+			System.out.println(contenido);
+		} else {
+			System.out.println("*****************************");
+			System.out.println("La pelicula con el identificador: " + identificador
+					+ " no se encuentra disponible en nuestra Base de datos.");
+			System.out.println("*****************************");
+		}
+		System.out.println("");
+		System.out.println("*****************************");
+		System.out.println("Desea usted volver a comprobar otro identificador de pelicula en nuestra base de datos.");
+		System.out.println("*****************************");
+		String comprobador = scanner.nextLine();
+		if ("si".equalsIgnoreCase(comprobador)) {
+			ListarPeliculasIdentificador();
+		}
 	}
 
-	
-	public static List<PeliculaTO> EliminarPeliculas() throws InterruptedException {
+	public static void EliminarPeliculas() throws InterruptedException {
 		scanner = new Scanner(System.in);
 		System.out.println("Introduce el Identificador de la pelicual que desea usted eliminar de la lista: ");
-		String borrar= scanner.nextLine();
-		
-		for(PeliculaTO peli : lista) {
-			if(borrar.equalsIgnoreCase(peli.getCodigopelicula())) {
-				System.out.println("");
-				System.out.println("La pelicula que desea usted borrar es la siguiente: ");
-				System.out.println("");
-				System.out.println(peli);
-				break;
+		String borrar = scanner.nextLine();
+		boolean verdad = false;
+//		boolean falso;
+		ArrayList<PeliculaTO> mostrar = new ArrayList<PeliculaTO>();
+		for (PeliculaTO peli : lista) {
+
+			if (borrar.equalsIgnoreCase(peli.getCodigopelicula())) {
+				verdad = true;
+				mostrar.add(peli);
 			}
 		}
-		return lista;
+		// Cuando borrar = PeliculaTO.getIdentificador();
+		if (verdad == true) {
+			System.out.println("");
+			System.out.println("La pelicula que desea usted borrar es la siguiente: ");
+			System.out.println("");
+			System.out.println("**********************************");
+			System.out.println(mostrar);
+			System.out.println("**********************************");
+
+		} else {
+			System.out.println("**********************************");
+			System.out.println("No existe la pelicula: " + borrar);
+			System.out.println("**********************************");
+
+		}
+		// Preguntamos si queremos volver a introducir otro identificador para realizar
+		// otro borrado de alguna pelicula que se encuentre en nuestra base de datos.
+		System.out.println(
+				"Desea volver a introducir otro identificador para borrar una pelicula existente en nuestra Base de Datos: ");
+		String deseo = scanner.nextLine();
+
+		if (deseo.equalsIgnoreCase("si")) {
+			EliminarPeliculas();
+		}
+
 	}
 
-	
 	public String getCadena() {
 		return cadena;
 	}
@@ -227,4 +267,5 @@ public class MemoryPeliculaDAO {
 	public void setEntrada(String entrada) {
 		this.entrada = entrada;
 	}
+
 }
