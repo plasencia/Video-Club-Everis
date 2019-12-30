@@ -19,31 +19,35 @@ public class PeliculaTO {
 	public void setCodigopelicula(String codigopelicula) {
 		this.codigopelicula = codigopelicula;
 	}
+	
 	/**
 	 * @return the actor
 	 */
-	private String getActor() {
+	/**
+	 * @return the actor
+	 */
+	public String getActor() {
 		return actor;
 	}
 	/**
 	 * @param actor the actor to set
 	 */
-	private void setActor(String actor) {
+	public void setActor(String actor) {
 		this.actor = actor;
 	}
 	/**
 	 * @return the director
 	 */
-	private String getDirector() {
+	public String getDirector() {
 		return director;
 	}
 	/**
 	 * @param director the director to set
 	 */
-	private void setDirector(String director) {
+	public void setDirector(String director) {
 		this.director = director;
 	}
-	
+
 	PeliculaTO(String titulo, String codigopelicula, String actor, String director) {
 		super();
 		this.titulo = titulo;
@@ -51,10 +55,13 @@ public class PeliculaTO {
 		this.actor = actor;
 		this.director = director;
 	}
+	
 	@Override
 	public String toString() {
 		return 
 		 titulo + "," + codigopelicula + "," + actor + "," + director;
 	}
+	
+	
 
 }
